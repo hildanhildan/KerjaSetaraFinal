@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    background: white;
+    margin: 30px auto;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+  }
+  
+  h2 {
+    color: #003366;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  .checkbox-list {
+    margin-top: 10px;
+  }
+  
+  .checkbox-list label {
+    display: block;
+    font-weight: normal;
+    margin-bottom: 4px; /* Lebih rapat */
+    padding-left: 10px; /* Opsional: biar rapi */
+    font-size: 14px;
+    gap: 10px;    /* Sedikit lebih kecil */
+  }
+  
+  
+  .form-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .btn {
+    background-color: #005792;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .btn:hover {
+    background-color: #003d6b;
+  }
+  

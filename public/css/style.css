@@ -1,0 +1,334 @@
+/* General styles */
+*:root {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: hwb(0 100% 0%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Header styles */
+header {
+    padding: 20px 0;
+    background-color: white;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 28px;
+    color: #444;
+}
+
+.logo span {
+    color: #3a8;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    background-color: #eee;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* Navigation styles */
+nav {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-menu {
+    display: flex;
+    list-style: none;
+}
+
+.main-menu li a {
+    display: block;
+    padding: 15px 20px;
+    color: #555;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.main-menu li a:hover {
+    color: #3a8;
+}
+
+.main-menu li a.highlight {
+    border: 2px solid #004a7c;
+    color: #004a7c;
+    margin: 10px 5px;
+    padding: 5px 10px;
+}
+
+.button-daftar {
+    background-color: #004a7c;
+    color: white !important;
+    margin: 10px 5px;
+    padding: 5px 15px !important;
+}
+
+/* Hero section */
+.hero {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: white;
+}
+
+.hero:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    padding: 80px 0;
+    z-index: 1;
+}
+
+.hero h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.search-box {
+    display: flex;
+    margin-top: 30px;
+    max-width: 600px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-box button {
+    background-color: #004a7c;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Section headers */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 20px;
+}
+
+.section-header h3 {
+    color: #444;
+    font-size: 20px;
+}
+
+.more-link {
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+/* Job listings */
+.job-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.job-card {
+    flex: 1 0 calc(50% - 20px);
+    min-width: 300px;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.company-logo {
+    padding: 20px;
+    background-color: white;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.company-logo img {
+    max-width: 120px;
+    height: auto;
+}
+
+.job-info {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.company-name {
+    color: #777;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.job-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.job-category, .job-for-disabled, .job-location {
+    margin-bottom: 10px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.job-for-disabled {
+    color: #e74c3c;
+}
+
+.job-details {
+    display: inline-block;
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.job-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.like-button:hover i {
+    color: #e74c3c;
+}
+
+/* Career tips */
+.tips-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.tip-card {
+    flex: 1 0 calc(33.333% - 20px);
+    min-width: 250px;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.tip-image {
+    height: 180px;
+    overflow: hidden;
+}
+
+.tip-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tip-info {
+    padding: 15px;
+    position: relative;
+}
+
+.tip-info h3 {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.share-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #777;
+}
+
+.tip-details-button {
+    display: inline-block;
+    border: 1px solid #3a8;
+    color: #3a8;
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 12px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
+/* Accessibility button */
+.accessibility-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.accessibility-button button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}

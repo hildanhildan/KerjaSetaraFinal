@@ -1,0 +1,91 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styling */
+header {
+    background-color: #005792;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* Container untuk menampilkan detail lowongan */
+.job-details-container {
+    background-color: white;
+    padding: 30px;
+    max-width: 900px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.job-header h2 {
+    color: #005792;
+    font-size: 24px;
+}
+
+.location, .deadline {
+    font-size: 14px;
+    color: #666;
+}
+
+h3 {
+    color: #003366;
+    margin-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding-left: 20px;
+    position: relative;
+}
+
+ul li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #005792;
+}
+
+.job-notes ul li {
+    margin-bottom: 10px;
+}
+
+button.apply-btn {
+    background-color: #d62d20;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+button.apply-btn:hover {
+    background-color: #b32b1e;
+}
+
+nav a {
+    color: #005792;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    display: inline-block;
+}

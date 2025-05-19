@@ -1,0 +1,116 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body and Main Layout */
+body {
+    background-color: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header */
+.login-form h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border 0.3s;
+    margin-bottom: 20px;
+}
+
+.input-group input:focus {
+    border: 1px solid #003b5c;
+}
+
+/* Button */
+.btn-login {
+    background-color: #003b5c;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #00263a;
+}
+
+/* Footer Text */
+.footer-text {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.footer-text span {
+    color: #003b5c;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 30px;
+    }
+
+    .login-form h2 {
+        font-size: 22px;
+    }
+
+    .input-group input {
+        padding: 10px;
+    }
+
+    .btn-login {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.7;
+    margin: 40px;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  h1 {
+    color: #005792;
+  }
+  
+  h2 {
+    color: #003366;
+    margin-top: 30px;
+  }
+  
+  p {
+    margin-bottom: 15px;
+  }
+  
+  ul {
+    margin-bottom: 20px;
+  }
+  

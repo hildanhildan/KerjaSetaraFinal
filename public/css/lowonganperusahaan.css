@@ -1,0 +1,108 @@
+/* Reset dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+  }
+  
+  /* Navigasi */
+  .navbar {
+    background-color: #004aad;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar h1 {
+    font-size: 1.5rem;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  
+  .navbar a:hover,
+  .navbar a.active {
+    text-decoration: underline;
+  }
+  
+  /* Konten utama */
+  .container {
+    padding: 2rem;
+  }
+  
+  .container h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #004aad;
+  }
+  
+  /* Daftar lowongan */
+  .job-listings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .job-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-left: 6px solid #004aad;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .job-card h3 {
+    font-size: 1.2rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+  }
+  
+  .job-card p {
+    margin: 0.3rem 0;
+  }
+  
+  .btn {
+    margin-top: 1rem;
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    background-color: #004aad;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #00357e;
+  }
+  
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #eaeaea;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+  }
+  
