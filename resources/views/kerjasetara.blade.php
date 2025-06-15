@@ -614,8 +614,8 @@
                 <div class="user-actions">
                     @guest
                         <!-- If the user is not logged in, show the login and register buttons -->
-                        <a href="{{ route('masuk') }}" class="btn btn-outline">Masuk</a>
-                        <a href="{{ route('daftar') }}" class="btn btn-primary">Daftar</a>
+                        <a href="{{ route('login') }}" class="btn btn-outline">Masuk</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary">Daftar</a>
                     @else
                         <!-- If the user is logged in, show the avatar and dashboard link -->
                         <a href="{{ route('dashboardperusahaan') }}" class="btn btn-outline">Dashboard</a>

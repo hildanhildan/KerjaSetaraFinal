@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckRole::class,
+            // alias middleware lain yang mungkin sudah ada atau akan kamu tambahkan
+            // 'auth' => \App\Http\Middleware\Authenticate::class, // Contoh, mungkin sudah ada
+            // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class, // Contoh
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

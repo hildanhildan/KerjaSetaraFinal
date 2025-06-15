@@ -1,3 +1,4 @@
+<!-- resources/views/profilperusahaan.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -11,151 +12,93 @@
     <aside class="sidebar">
       <h2><a href="{{ route('dashboardperusahaan') }}">Kerja<span>Setara</span></a></h2>
       <nav>
-        <a href="{{ route('profilperusahaan') }}" class="{{ request()->routeIs('profilperusahaan') ? 'active' : '' }}">🏠 Profil Perusahaan</a>
-        <a href="{{ route('lowonganperusahaan') }}" class="{{ request()->routeIs('lowonganperusahaan') ? 'active' : '' }}">📄 Lowongan Saya</a>
-        <a href="{{ route('buatlowongan') }}" class="{{ request()->routeIs('buatlowongan') ? 'active' : '' }}">➕ Buat Lowongan</a>
-        <a href="{{ route('lamaran') }}" class="{{ request()->routeIs('lamaran') ? 'active' : '' }}">📨 Lamaran Masuk</a>
+        <a href="{{ route('profilperusahaan') }}" class="active">🏠 Profil Perusahaan</a>
+        <a href="{{ route('lowonganperusahaan') }}">📄 Lowongan Saya</a>
+        <a href="{{ route('buatlowongan') }}">➕ Buat Lowongan</a>
+        <a href="{{ route('lamaran') }}">📨 Lamaran Masuk</a>
 
-        <!-- Logout POST -->
         <form id="logout-form" action="{{ route('logout.perusahaan') }}" method="POST" style="display: none;">
           @csrf
         </form>
-        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          🚪 Keluar
-        </a>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">🚪 Keluar</a>
       </nav>
     </aside>
 
-
     <main class="main">
       <div class="header">
-        <h1 id="form-title">Profil Perusahaan</h1>
+        <h1>Edit Profil Perusahaan</h1>
       </div>
 
-      <form class="card" id="profile-form" style="max-width: 100000px;">
+      <form class="card" action="{{ route('profilperusahaan.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
         <div style="margin-bottom: 1rem;">
-          <label for="nama" style="display: block; margin-bottom: 0.5rem;">Nama Perusahaan</label>
-          <input type="text" id="nama" name="nama" class="form-input" placeholder="Contoh: PT Inklusif Jaya" required />
+          <label>Nama Perusahaan</label>
+          <input type="text" name="nama_resmi_perusahaan" value="{{ old('nama_resmi_perusahaan', $profilPerusahaan->nama_resmi_perusahaan) }}" required>
         </div>
 
         <div style="margin-bottom: 1rem;">
-          <label for="provinsi" style="display: block; margin-bottom: 0.5rem;">Provinsi</label>
-          <select id="provinsi" name="provinsi" class="form-input" required>
-            <option value="">-- Pilih Provinsi --</option>
-            <option value="jatim">Jawa Timur</option>
-            <option value="jateng">Jawa Tengah</option>
-            <option value="jabar">Jawa Barat</option>
-            <option value="jakarta">Jakarta</option>
-          </select>
+          <label>Provinsi</label>
+          <input type="text" name="provinsi" value="{{ old('provinsi', $profilPerusahaan->provinsi) }}">
         </div>
 
         <div style="margin-bottom: 1rem;">
-          <label for="kota" style="display: block; margin-bottom: 0.5rem;">Kota/Kabupaten</label>
-          <select id="kota" name="kota" class="form-input" required>
-            <option value="">-- Pilih Kota/Kabupaten --</option>
-          </select>
+          <label>Kota/Kabupaten</label>
+          <input type="text" name="kota" value="{{ old('kota', $profilPerusahaan->kota) }}">
         </div>
 
         <div style="margin-bottom: 1rem;">
-          <label for="sektor" style="display: block; margin-bottom: 0.5rem;">Sektor Perusahaan</label>
-          <select id="sektor" name="sektor" class="form-input" required>
-            <option value="">-- Pilih Sektor --</option>
-            <option value="it">Teknologi Informasi</option>
-            <option value="retail">Retail</option>
-            <option value="pelayanan">Pelayanan Pelanggan</option>
-          </select>
+          <label>Alamat Lengkap</label>
+          <textarea name="alamat_lengkap">{{ old('alamat_lengkap', $profilPerusahaan->alamat_lengkap) }}</textarea>
         </div>
 
         <div style="margin-bottom: 1rem;">
-          <label for="email" style="display: block; margin-bottom: 0.5rem;">Email Perusahaan</label>
-          <input type="email" id="email" name="email" class="form-input" placeholder="email@perusahaan.com" required />
+          <label>Kode Pos</label>
+          <input type="text" name="kode_pos" value="{{ old('kode_pos', $profilPerusahaan->kode_pos) }}">
         </div>
 
         <div style="margin-bottom: 1rem;">
-          <label for="telepon" style="display: block; margin-bottom: 0.5rem;">Telepon</label>
-          <input type="text" id="telepon" name="telepon" class="form-input" placeholder="08123456789" required />
+          <label>Bidang Usaha</label>
+          <input type="text" name="bidang_usaha" value="{{ old('bidang_usaha', $profilPerusahaan->bidang_usaha) }}">
         </div>
 
         <div style="margin-bottom: 1rem;">
-          <label for="deskripsi" style="display: block; margin-bottom: 0.5rem;">Deskripsi Perusahaan</label>
-          <textarea id="deskripsi" name="deskripsi" class="form-input" rows="4" placeholder="Ceritakan secara singkat tentang perusahaan Anda..." required></textarea>
+          <label>Email Perusahaan</label>
+          <input type="email" name="email_perusahaan" value="{{ old('email_perusahaan', $profilPerusahaan->email_perusahaan) }}">
         </div>
 
-        <button type="submit" id="submit-btn" class="btn-primary">Simpan Profil</button>
+        <div style="margin-bottom: 1rem;">
+          <label>Telepon</label>
+          <input type="text" name="telepon_perusahaan" value="{{ old('telepon_perusahaan', $profilPerusahaan->telepon_perusahaan) }}">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label>Website</label>
+          <input type="url" name="website" value="{{ old('website', $profilPerusahaan->website) }}">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label>NPWP</label>
+          <input type="text" name="npwp" value="{{ old('npwp', $profilPerusahaan->npwp) }}">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label>Deskripsi Perusahaan</label>
+          <textarea name="deskripsi" rows="4">{{ old('deskripsi', $profilPerusahaan->deskripsi) }}</textarea>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label>Logo Perusahaan (Opsional)</label><br>
+          @if ($profilPerusahaan->logo_path)
+            <img src="{{ asset('storage/' . $profilPerusahaan->logo_path) }}" alt="Logo" style="max-width: 100px;"><br>
+          @endif
+          <input type="file" name="logo" accept="image/*">
+        </div>
+
+        <button type="submit" class="btn-primary">Simpan Profil</button>
       </form>
     </main>
   </div>
-
-  <script>
-    const kotaOptions = {
-      jatim: ['Surabaya', 'Malang', 'Kediri', 'Bojonegoro', 'Jombang'],
-      jabar: ['Bandung', 'Bekasi', 'Bogor', 'Depok'],
-      jateng: ['Batang', 'Kajen', 'Klaten', 'Purbalingga', 'Purwokerto', 'Solo'],
-      jakarta: ['Jakarta Timur', 'Jakarta Utara', 'Jakarta Selatan', 'Jakarta Pusat', 'Jakarta Barat']
-    };
-  
-    const provinsiSelect = document.getElementById('provinsi');
-    const kotaSelect = document.getElementById('kota');
-  
-    provinsiSelect.addEventListener('change', function () {
-      const selectedProvinsi = this.value;
-      const kotaList = kotaOptions[selectedProvinsi] || [];
-  
-      kotaSelect.innerHTML = '<option value="">-- Pilih Kota/Kabupaten --</option>';
-      kotaList.forEach(kota => {
-        const option = document.createElement('option');
-        option.value = kota.toLowerCase().replace(/\s+/g, '-');
-        option.textContent = kota;
-        kotaSelect.appendChild(option);
-      });
-    });
-  
-    const form = document.getElementById('profile-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const formTitle = document.getElementById('form-title');
-  
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-  
-      const savedData = {
-        nama: document.getElementById('nama').value,
-        provinsi: document.getElementById('provinsi').value,
-        kota: document.getElementById('kota').value,
-        sektor: document.getElementById('sektor').value,
-        email: document.getElementById('email').value,
-        telepon: document.getElementById('telepon').value,
-        deskripsi: document.getElementById('deskripsi').value
-      };
-  
-      // Simpan ke sessionStorage
-      sessionStorage.setItem('profilPerusahaan', JSON.stringify(savedData));
-  
-      formTitle.textContent = 'Edit Profil Perusahaan';
-      submitBtn.textContent = 'Perbarui Profil';
-  
-      alert('Data berhasil disimpan!');
-    });
-  
-    // Saat reload halaman, cek sessionStorage
-    window.addEventListener('load', () => {
-      const stored = sessionStorage.getItem('profilPerusahaan');
-      if (stored) {
-        const savedData = JSON.parse(stored);
-  
-        document.getElementById('nama').value = savedData.nama;
-        document.getElementById('provinsi').value = savedData.provinsi;
-        provinsiSelect.dispatchEvent(new Event('change')); // isi kota
-        document.getElementById('kota').value = savedData.kota;
-        document.getElementById('sektor').value = savedData.sektor;
-        document.getElementById('email').value = savedData.email;
-        document.getElementById('telepon').value = savedData.telepon;
-        document.getElementById('deskripsi').value = savedData.deskripsi;
-  
-        formTitle.textContent = 'Edit Profil Perusahaan';
-        submitBtn.textContent = 'Perbarui Profil';
-      }
-    });
-  </script>
-  
 </body>
 </html>

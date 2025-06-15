@@ -47,6 +47,11 @@
                     <input type="password" id="password" name="password" required placeholder="Masukkan password">
                 </div>
 
+                <div class="input-group">
+                    <label for="password_confirmation">Konfirmasi Password</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Ulangi password">
+                </div>
+
                 <button type="submit" class="btn-register">Daftar</button>
             </form>
 

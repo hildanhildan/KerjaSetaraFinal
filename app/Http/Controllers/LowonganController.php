@@ -3,81 +3,129 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lowongan;
+use App\Models\Perusahaan; // Memastikan kita menggunakan model Perusahaan
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule; // Diperlukan untuk validasi 'in'
 
 class LowonganController extends Controller
 {
-    public function index()
+    /**
+     * Menampilkan daftar lowongan milik penyedia kerja yang sedang login.
+     * Terhubung dengan route 'lowonganperusahaan'.
+     */
+    public function index(): View
     {
-        $lowongans = Lowongan::all(); // Atau filter by perusahaan yang login
+        $userId = Auth::id();
+        $lowongans = Lowongan::where('user_id', $userId)->latest()->get();
         return view('lowonganperusahaan', compact('lowongans'));
     }
 
-    public function edit($id)
+    /**
+     * Menampilkan form untuk membuat lowongan baru.
+     * Terhubung dengan route 'buatlowongan'.
+     */
+    public function create(): View|RedirectResponse
     {
-        // Ambil data lowongan berdasarkan ID dari database
-        $lowongan = Lowongan::find($id);
+        $user = Auth::user();
 
-        // Jika lowongan tidak ditemukan, kembalikan ke halaman sebelumnya atau tampilkan error
-        if (!$lowongan) {
-            return redirect()->route('lowonganperusahaan')->with('error', 'Lowongan tidak ditemukan');
+        // Menggunakan relasi 'perusahaan' yang ada di model User
+        $perusahaan = $user->perusahaan; 
+
+        // Jika penyedia kerja belum melengkapi profil perusahaannya,
+        // arahkan ke halaman profil terlebih dahulu.
+        if (!$perusahaan || !$perusahaan->nama_resmi_perusahaan) {
+            return redirect()->route('profilperusahaan')->with('error', 'Harap lengkapi profil perusahaan Anda sebelum membuat lowongan.');
         }
 
-        // Kirim data lowongan ke view editlowongan
+        // Kirim data perusahaan ke view 'buatlowongan'
+        return view('buatlowongan', compact('perusahaan'));
+    }
+
+    /**
+     * Menyimpan lowongan yang baru dibuat ke database.
+     * Terhubung dengan route 'lowongan.store'.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        // Validasi data dari form. Pastikan atribut 'name' di form
+        // sesuai dengan kunci validasi di sini.
+        $validatedData = $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'jenisDisabilitas' => 'required|string|max:255',
+            'tipe_pekerjaan' => 'required|string|max:255',
+            'status' => ['required', 'string', Rule::in(['Aktif', 'Draft'])],
+        ]);
+        
+        // Ambil data profil perusahaan dari user yang login
+        $perusahaan = Auth::user()->perusahaan;
+
+        // Tambahkan data yang tidak berasal dari form
+        $validatedData['user_id'] = Auth::id();
+        $validatedData['perusahaan'] = $perusahaan->nama_resmi_perusahaan;
+        $validatedData['lokasi'] = ($perusahaan->kota ?? '') . ', ' . ($perusahaan->provinsi ?? '');
+        $validatedData['pelamar'] = 0; // Inisialisasi jumlah pelamar
+        
+        // Buat record baru di tabel lowongan
+        // PENTING: Pastikan semua kunci di $validatedData ada di properti $fillable model Lowongan
+        Lowongan::create($validatedData);
+
+        return redirect()->route('lowonganperusahaan')->with('success', 'Lowongan berhasil ditambahkan!');
+    }
+
+    /**
+     * Menampilkan form untuk mengedit lowongan yang ada.
+     */
+    public function edit(Lowongan $lowongan): View|RedirectResponse
+    {
+        // Otorisasi: Pastikan lowongan ini milik user yang sedang login
+        if ($lowongan->user_id !== Auth::id()) {
+            abort(403, 'AKSES DITOLAK.');
+        }
+
         return view('editlowongan', compact('lowongan'));
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Memperbarui lowongan yang ada di database.
+     */
+    public function update(Request $request, Lowongan $lowongan): RedirectResponse
     {
-        // Validasi data yang dikirimkan
-        $request->validate([
+        // Otorisasi: Pastikan lowongan ini milik user yang sedang login
+        if ($lowongan->user_id !== Auth::id()) {
+            abort(403, 'AKSES DITOLAK.');
+        }
+
+        // Validasi data
+        $validatedData = $request->validate([
             'judul' => 'required|string|max:255',
-            'perusahaan' => 'required|string|max:255',
-            'lokasi' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
             'jenisDisabilitas' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-            'pelamar' => 'required|integer',
+            'tipe_pekerjaan' => 'required|string|max:255',
+            'status' => ['required', 'string', Rule::in(['Aktif', 'Draft', 'Ditutup'])],
         ]);
 
-        // Temukan lowongan berdasarkan ID
-        $lowongan = Lowongan::findOrFail($id);
+        // Update lowongan dengan data yang sudah divalidasi
+        $lowongan->update($validatedData);
 
-        // Perbarui data lowongan
-        $lowongan->update($request->all());
-
-        return redirect()->route('lowonganperusahaan')->with('success', 'Lowongan berhasil diperbarui');
+        return redirect()->route('lowonganperusahaan')->with('success', 'Lowongan berhasil diperbarui.');
     }
 
-    public function store(Request $request)
+    /**
+     * Menghapus lowongan dari database.
+     */
+    public function destroy(Lowongan $lowongan): RedirectResponse
     {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'perusahaan' => 'required|string|max:255',
-            'jenisDisabilitas' => 'required|string|max:255',
-            'lokasi' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
-        ]);
+        // Otorisasi: Pastikan lowongan ini milik user yang sedang login
+        if ($lowongan->user_id !== Auth::id()) {
+            abort(403, 'AKSES DITOLAK.');
+        }
 
-        Lowongan::create([
-            'judul' => $request->judul,
-            'perusahaan' => $request->perusahaan,
-            'jenisDisabilitas' => $request->jenisDisabilitas,
-            'lokasi' => $request->lokasi,
-            'status' => $request->status,
-            'pelamar' => 0
-        ]);
+        $lowongan->delete();
 
-        return redirect()->route('lowonganperusahaan')->with('success', 'Lowongan berhasil disimpan.');
+        return redirect()->route('lowonganperusahaan')->with('success', 'Lowongan berhasil dihapus.');
     }
-
-    public function destroy($id)
-{
-    $lowongan = Lowongan::findOrFail($id);
-    $lowongan->delete();
-
-    return redirect()->route('lowonganperusahaan')->with('success', 'Lowongan berhasil dihapus');
 }
-
-
-}
-

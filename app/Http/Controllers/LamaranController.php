@@ -13,7 +13,7 @@ class LamaranController extends Controller
     $applications = \App\Models\JobApplication::all();
 
     // Debugging output
-    dd($applications); // Cek apakah data benar-benar ada
+    //dd($applications); // Cek apakah data benar-benar ada
 
     // Return the 'dashboardperusahaan' view with the applications data
     return view('dashboardperusahaan', compact('applications'));

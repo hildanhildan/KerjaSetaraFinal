@@ -43,7 +43,7 @@ return [
         'perusahaan' => [
             'driver' => 'session',
             'provider' => 'perusahaans',
-    ],
+        ],
     ],
 
     /*
@@ -115,4 +115,5 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    
 ];

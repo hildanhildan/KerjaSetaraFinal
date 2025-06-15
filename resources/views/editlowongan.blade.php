@@ -67,14 +67,14 @@
           <input type="number" id="pelamar" name="pelamar" value="{{ $lowongan->pelamar }}" class="form-input" required />
         </div>
 
-        <button type="submit" class="btn-primary">💾 Perbarui Lowongan</button>
+        <button type="submit" class="btn-primary"> Perbarui Lowongan</button>
       </form>
 
       <!-- Form Delete (Pisah dari form update) -->
       <form method="POST" action="{{ route('hapusLowongan', ['id' => $lowongan->id]) }}" onsubmit="return confirm('Yakin ingin menghapus lowongan ini?');" style="margin-top: 1rem;">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn-danger">🗑️ Hapus Lowongan</button>
+        <button type="submit" class="btn-danger"> Hapus Lowongan</button>
       </form>
     </main>
   </div>
