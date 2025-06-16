@@ -10,15 +10,18 @@ use App\Http\Controllers\DashboardPerusahaanController;
 use App\Http\Controllers\ProfilPerusahaanController;
 use App\Http\Controllers\LamaranController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\PelamarDashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobListingController;
+use App\Http\Controllers\RiwayatLamaranController;
+use App\Http\Controllers\LandingPageController;
 
 // --- Rute Umum (untuk semua pengguna atau publik) ---
 
-Route::get('/', function () {
-    return view('kerjasetara');
-})->name('kerjasetara'); // Landing page
 
-Route::get('/lowongan', [LowonganController::class, 'index'])->name('lowongan'); // Rute untuk halaman lowongan, nama dikembalikan ke 'lowongan'
+Route::get('/', [LandingPageController::class, 'index'])->name('kerjasetara');
+
+Route::get('/lowongan', [JobListingController::class, 'index'])->name('lowongan');
 Route::get('/daftar-perusahaan', [PerusahaanController::class, 'index'])->name('daftarperusahaan');
 Route::get('/tips-karir', [TipsController::class, 'index'])->name('tips');
 
@@ -57,12 +60,17 @@ Route::middleware(['auth', 'role:penyedia_kerja'])->group(function () {
     Route::post('/lowongan', [LowonganController::class, 'store'])->name('lowongan.store');
 
     // Manajemen Lamaran Masuk
-    Route::get('/lamaran-masuk', [LamaranController::class, 'showLamaran'])->name('lamaran'); // Nama rute dikembalikan ke 'lamaran'
+    Route::get('/lamaran-masuk', [LamaranController::class, 'index'])->name('lamaran');
     Route::post('/lamaran/{applicationId}/accept', [LamaranController::class, 'acceptLamaran'])->name('lamaran.accept');
     Route::post('/lamaran/{applicationId}/reject', [LamaranController::class, 'rejectLamaran'])->name('lamaran.reject');
 
     // Logout Khusus Penyedia
     Route::post('/logout-penyedia', [AuthenticatedSessionController::class, 'destroy'])->name('logout.perusahaan');
+
+    Route::get('/lowongan-saya/{lowongan}/edit', [App\Http\Controllers\LowonganController::class, 'edit'])->name('lowongan.edit');
+
+    // TAMBAHKAN ROUTE INI UNTUK MEMPROSES UPDATE LOWONGAN
+    Route::put('/lowongan-saya/{lowongan}', [App\Http\Controllers\LowonganController::class, 'update'])->name('lowongan.update');
 });
 
 // --- Rute Profil Pengguna (Standar Breeze) ---
@@ -76,6 +84,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/lowongan-saya/{lowongan}/edit', [App\Http\Controllers\LowonganController::class, 'edit'])->name('lowongan.edit');
 });
 
+Route::middleware(['auth', 'role:pelamar'])->group(function () {
+    Route::get('/dashboard-pelamar', [PelamarDashboardController::class, 'index'])->name('dashboard.pelamar');
+    // Tambahkan route lain khusus pelamar di sini nanti (misal: halaman profil pelamar, riwayat lamaran)
+    Route::post('/lowongan/{lowongan}/apply', [LamaranController::class, 'apply'])->name('lamaran.apply');
+    Route::get('/lamaran-saya', [RiwayatLamaranController::class, 'index'])->name('lamaran.riwayat');
+});
 
+Route::get('/lowongan/{lowongan}', [JobListingController::class, 'show'])->name('lowongan.show');
+
+Route::get('/tips-karir', [TipsController::class, 'index'])->name('tips');
 // Memuat rute autentikasi standar Breeze
 require __DIR__.'/auth.php';

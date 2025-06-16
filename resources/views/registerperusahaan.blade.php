@@ -32,6 +32,8 @@
             <form action="{{ route('registerperusahaan') }}" method="POST">
                 @csrf
 
+                <input type="hidden" name="role" value="penyedia_kerja">
+                
                 <div class="input-group">
                     <label for="name">Nama Perusahaan</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="Masukkan nama perusahaan">

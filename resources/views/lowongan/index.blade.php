@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KerjaSetara - Portal Lowongan Kerja Inklusif</title>
-    {{-- Memuat Font Awesome untuk ikon --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    {{-- Memuat file CSS utama dari folder public --}}
+    <title>Cari Lowongan - KerjaSetara</title>
     <link rel="stylesheet" href="{{ asset('css/kerjasetara.css') }}">
-    {{-- Font Google --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .search-hero { padding: 4rem 0; background-color: #007bff; color: #fff; text-align: center; }
+        .pagination-container { margin-top: 2rem; display: flex; justify-content: center; }
+    </style>
 </head>
 <body>
     <header>
@@ -21,17 +20,16 @@
                     <h1><a href="{{ route('kerjasetara') }}">Kerja<span>Setara</span></a></h1>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="{{ route('lowongan') }}">Cari Lowongan</a></li>
+                    <li><a href="{{ route('lowongan') }}" class="active">Cari Lowongan</a></li>
                     <li><a href="{{ route('daftarperusahaan') }}">Daftar Perusahaan</a></li>
                     <li><a href="{{ route('tips') }}">Tips Karir</a></li>
                 </ul>
                 <div class="user-actions">
-                    <a href="{{ route('penyedia') }}" style="margin-right: 15px; font-weight: 600; color: #495057; text-decoration:none;">Penyedia Kerja</a>
                     @guest
                         <a href="{{ route('login') }}" class="btn btn-outline">Masuk</a>
                         <a href="{{ route('register') }}" class="btn btn-primary">Daftar</a>
                     @else
-                        <a href="{{ Auth::user()->role == 'pelamar' ? route('dashboard.pelamar') : route('dashboardperusahaan') }}" class="btn btn-primary">Dashboard</a>
+                        <a href="{{ Auth::user()->role == 'pelamar' ? route('dashboard.pelamar') : route('dashboardperusahaan') }}" class="btn btn-outline">Dashboard</a>
                     @endguest
                 </div>
             </div>
@@ -39,30 +37,25 @@
     </header>
 
     <main>
-        {{-- Hero Section --}}
-        <section class="hero">
-            <div class="hero-background"></div>
+        <section class="search-hero">
             <div class="container">
                 <div class="hero-content">
-                    <h2>Cari Lowongan Berdasarkan Keunikanmu</h2>
-                    <p>Apapun masalahmu, pasti ada solusi. Temukan peluang karir inklusif di sini.</p>
+                    <h2>Temukan Pekerjaan Impian Anda</h2>
+                    <p>Jelajahi ribuan lowongan kerja inklusif di seluruh Indonesia.</p>
                     <form action="{{ route('lowongan') }}" method="GET">
-                        <div class="search-box">
-                            <input type="text" name="q" placeholder="Ketik posisi, perusahaan, atau keahlian...">
-                            <button type="submit">Cari Lowongan</button>
+                        <div class="search-box" style="margin-top: 2rem;">
+                            <input type="text" name="q" placeholder="Ketik posisi atau perusahaan..." value="{{ request('q') }}">
+                            <button type="submit">Cari</button>
                         </div>
                     </form>
                 </div>
             </div>
         </section>
 
-        {{-- Content Section --}}
         <div class="container">
-            <!-- Lowongan Terbaru -->
-            <section>
+            <section style="padding: 50px 0;">
                 <div class="section-header">
-                    <h3>Lowongan Terbaru</h3>
-                    <a href="{{ route('lowongan') }}">Lihat Semua &rarr;</a>
+                    <h3>Menampilkan Hasil Pencarian</h3>
                 </div>
                 
                 <div class="job-container">
@@ -86,35 +79,12 @@
                             </div>
                         </div>
                     @empty
-                        <p>Saat ini belum ada lowongan terbaru.</p>
+                        <p>Tidak ada lowongan yang ditemukan dengan kriteria Anda.</p>
                     @endforelse
-                </div>
-            </section>
-
-            <!-- Tips Karir -->
-            <section>
-                <div class="section-header">
-                    <h3>Tips Karir</h3>
-                    <a href="{{ route('tips') }}">Lihat Semua &rarr;</a>
                 </div>
                 
-                <div class="tips-container">
-                    @forelse ($tips as $tip)
-                        <div class="tip-card">
-                            <div class="tip-image">
-                                <img src="{{ $tip->gambar_url }}" alt="Gambar Artikel" class="job-image">
-                            </div>
-                            <div class="tip-content">
-                                <div class="tip-source">{{ $tip->sumber }}</div>
-                                <h3 class="tip-title">{{ Str::limit($tip->judul, 70) }}</h3>
-                                <div class="tip-footer">
-                                    <a href="{{ $tip->link }}" target="_blank" rel="noopener noreferrer" class="read-more">Baca Selengkapnya</a>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <p>Belum ada tips karir yang ditambahkan.</p>
-                    @endforelse
+                <div class="pagination-container">
+                    {{ $lowongans->links() }}
                 </div>
             </section>
         </div>

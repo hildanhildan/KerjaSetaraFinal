@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,34 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    // ... method lain ...
+    /**
+     * Display the login view.
+     */
+    public function create(): View
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Handle an incoming authentication request.
+     */
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        // Ambil data user yang baru saja login
+        $user = Auth::user();
+
+        // Cek peran user dan arahkan ke dashboard yang sesuai
+        if ($user->role === 'penyedia_kerja') {
+            return redirect()->intended(route('dashboardperusahaan'));
+        }
+        
+        // Arahkan ke dashboard pelamar untuk semua role lainnya (default)
+        return redirect()->intended(route('dashboard.pelamar'));
+    }
 
     /**
      * Destroy an authenticated session.
@@ -23,9 +51,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/'); // Atau route lain setelah logout
+        return redirect('/');
     }
-
-    // Baris "require __DIR__.'/auth.php';" telah dihapus dari sini.
-    // Baris tersebut hanya boleh ada di routes/web.php
 }

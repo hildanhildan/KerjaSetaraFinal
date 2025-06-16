@@ -1,82 +1,88 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Edit Lowongan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="{{ asset('css/dashboardperusahaan.css') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edit Lowongan - KerjaSetara</title>
+    <link rel="stylesheet" href="{{ asset('css/dashboardperusahaan.css') }}">
+    {{-- Anda bisa menambahkan style dari buatlowongan.css jika sudah ada --}}
 </head>
 <body>
-  <div class="dashboard">
-    <aside class="sidebar">
-      <h2><a href="{{ route('dashboardperusahaan') }}">Kerja<span>Setara</span></a></h2>
-      <nav>
-        <a href="{{ route('profilperusahaan') }}" class="{{ request()->routeIs('profilperusahaan') ? 'active' : '' }}">🏠 Profil Perusahaan</a>
-        <a href="{{ route('lowonganperusahaan') }}" class="{{ request()->routeIs('lowonganperusahaan') ? 'active' : '' }}">📄 Lowongan Saya</a>
-        <a href="{{ route('buatlowongan') }}" class="{{ request()->routeIs('buatlowongan') ? 'active' : '' }}">➕ Buat Lowongan</a>
-        <a href="{{ route('lamaran') }}" class="{{ request()->routeIs('lamaran') ? 'active' : '' }}">📨 Lamaran Masuk</a>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2><a href="{{ route('dashboardperusahaan') }}">Kerja<span>Setara</span></a></h2>
+            <nav>
+                <a href="{{ route('profilperusahaan') }}">🏠 Profil Perusahaan</a>
+                <a href="{{ route('lowonganperusahaan') }}" class="active">📄 Lowongan Saya</a>
+                <a href="{{ route('buatlowongan') }}">➕ Buat Lowongan</a>
+                <a href="{{ route('lamaran') }}">📨 Lamaran Masuk</a>
 
-        <!-- Logout POST -->
-        <form id="logout-form" action="{{ route('logout.perusahaan') }}" method="POST" style="display: none;">
-          @csrf
-        </form>
-        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          🚪 Keluar
-        </a>
-      </nav>
-    </aside>
-    
-    <main class="main">
-      <div class="header">
-        <h1>Edit Lowongan</h1>
-      </div>
+                <!-- Logout -->
+                <form id="logout-form" action="{{ route('logout.perusahaan') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    🚪 Keluar
+                </a>
+            </nav>
+        </aside>
 
-      <!-- Form Update -->
-      <form class="card" method="POST" action="{{ route('updateLowongan', ['id' => $lowongan->id]) }}">
-        @csrf
-        @method('PUT')
-        
-        <div style="margin-bottom: 1rem;">
-          <label for="judul">Judul Lowongan</label>
-          <input type="text" id="judul" name="judul" value="{{ $lowongan->judul }}" class="form-input" required />
-        </div>
+        <!-- Main Content -->
+        <main class="main">
+            <div class="header">
+                <h1>Edit Lowongan Pekerjaan</h1>
+            </div>
 
-        <div style="margin-bottom: 1rem;">
-          <label for="perusahaan">Perusahaan</label>
-          <input type="text" id="perusahaan" name="perusahaan" value="{{ $lowongan->perusahaan }}" class="form-input" required />
-        </div>
+            <form action="{{ route('lowongan.update', $lowongan->id) }}" method="POST" class="form-lowongan">
+                @csrf
+                @method('PUT') {{-- Method spoofing untuk update --}}
 
-        <div style="margin-bottom: 1rem;">
-          <label for="lokasi">Lokasi</label>
-          <input type="text" id="lokasi" name="lokasi" value="{{ $lowongan->lokasi }}" class="form-input" required />
-        </div>
+                <div>
+                    <label for="judul">Judul Pekerjaan</label>
+                    <input type="text" id="judul" name="judul" value="{{ old('judul', $lowongan->judul) }}" required>
+                </div>
 
-        <div style="margin-bottom: 1rem;">
-          <label for="jenisDisabilitas">Jenis Disabilitas</label>
-          <input type="text" id="jenisDisabilitas" name="jenisDisabilitas" value="{{ $lowongan->jenisDisabilitas }}" class="form-input" required />
-        </div>
+                <div>
+                    <label for="deskripsi">Deskripsi Pekerjaan</label>
+                    <textarea id="deskripsi" name="deskripsi" rows="6" required>{{ old('deskripsi', $lowongan->deskripsi) }}</textarea>
+                </div>
 
-        <div style="margin-bottom: 1rem;">
-          <label for="status">Status</label>
-          <input type="text" id="status" name="status" value="{{ $lowongan->status }}" class="form-input" required />
-        </div>
+                <div>
+                    <label for="jenisDisabilitas">Kategori Disabilitas</label>
+                    <select id="jenisDisabilitas" name="jenisDisabilitas" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="Semua Jenis Disabilitas" {{ old('jenisDisabilitas', $lowongan->jenisDisabilitas) == 'Semua Jenis Disabilitas' ? 'selected' : '' }}>Semua Jenis Disabilitas</option>
+                        <option value="Tunadaksa" {{ old('jenisDisabilitas', $lowongan->jenisDisabilitas) == 'Tunadaksa' ? 'selected' : '' }}>Tunadaksa</option>
+                        <option value="Tunanetra" {{ old('jenisDisabilitas', $lowongan->jenisDisabilitas) == 'Tunanetra' ? 'selected' : '' }}>Tunanetra</option>
+                        <option value="Tunarungu" {{ old('jenisDisabilitas', $lowongan->jenisDisabilitas) == 'Tunarungu' ? 'selected' : '' }}>Tunarungu</option>
+                        {{-- Tambahkan opsi lain sesuai kebutuhan --}}
+                    </select>
+                </div>
 
-        <div style="margin-bottom: 1rem;">
-          <label for="pelamar">Jumlah Pelamar</label>
-          <input type="number" id="pelamar" name="pelamar" value="{{ $lowongan->pelamar }}" class="form-input" required />
-        </div>
+                <div>
+                    <label for="tipe_pekerjaan">Tipe Pekerjaan</label>
+                    <select id="tipe_pekerjaan" name="tipe_pekerjaan" required>
+                        <option value="">-- Pilih Tipe --</option>
+                        <option value="Penuh Waktu" {{ old('tipe_pekerjaan', $lowongan->tipe_pekerjaan) == 'Penuh Waktu' ? 'selected' : '' }}>Penuh Waktu</option>
+                        <option value="Paruh Waktu" {{ old('tipe_pekerjaan', $lowongan->tipe_pekerjaan) == 'Paruh Waktu' ? 'selected' : '' }}>Paruh Waktu</option>
+                        <option value="Magang" {{ old('tipe_pekerjaan', $lowongan->tipe_pekerjaan) == 'Magang' ? 'selected' : '' }}>Magang</option>
+                        <option value="Kontrak" {{ old('tipe_pekerjaan', $lowongan->tipe_pekerjaan) == 'Kontrak' ? 'selected' : '' }}>Kontrak</option>
+                    </select>
+                </div>
 
-        <button type="submit" class="btn-primary"> Perbarui Lowongan</button>
-      </form>
+                <div>
+                    <label for="status">Status Publikasi</label>
+                    <select id="status" name="status" required>
+                        <option value="Aktif" {{ old('status', $lowongan->status) == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="Draft" {{ old('status', $lowongan->status) == 'Draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="Ditutup" {{ old('status', $lowongan->status) == 'Ditutup' ? 'selected' : '' }}>Ditutup</option>
+                    </select>
+                </div>
 
-      <!-- Form Delete (Pisah dari form update) -->
-      <form method="POST" action="{{ route('hapusLowongan', ['id' => $lowongan->id]) }}" onsubmit="return confirm('Yakin ingin menghapus lowongan ini?');" style="margin-top: 1rem;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn-danger"> Hapus Lowongan</button>
-      </form>
-    </main>
-  </div>
+                <button type="submit" class="btn-tambah">Perbarui Lowongan</button>
+            </form>
+        </main>
+    </div>
 </body>
 </html>
