@@ -7,7 +7,7 @@
     <!-- Hapus salah satu dari dua CDN berikut -->
     <!-- <link rel="stylesheet" href="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/stylelow.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/stylelow.css') }}">
 </head>
 <body>
 

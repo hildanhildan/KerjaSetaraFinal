@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lengkapi Profil Perusahaan</title>
-    <link rel="stylesheet" href="{{ asset('css/lengkapiperusahaan.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/lengkapiperusahaan.css') }}">
 </head>
 <body>
     <div class="form-container">

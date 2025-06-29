@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Lowongan - Operator Mesin Cetak</title>
-    <link rel="stylesheet" href="{{ asset('css/styledet.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/styledet.css') }}">
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>

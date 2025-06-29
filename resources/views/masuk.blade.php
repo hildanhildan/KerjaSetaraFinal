@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KERJABILITAS - Portal Kerja</title>
-    <link rel="stylesheet" href="{{ asset('css/masuk.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/masuk.css') }}">
 </head>
 <body>
     <div class="container">

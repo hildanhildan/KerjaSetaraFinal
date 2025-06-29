@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Syarat & Ketentuan - KerjaSetara</title>
-  <link rel="stylesheet" href="{{ asset('css/syarat-ketentuan.css') }}">
+  <link rel="stylesheet" href="{{ secure_asset('css/syarat-ketentuan.css') }}">
 </head>
 <body>
   <h1>Syarat & Ketentuan Pengguna - KerjaSetara</h1>

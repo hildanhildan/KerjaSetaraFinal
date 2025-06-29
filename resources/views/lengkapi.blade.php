@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Lengkapi Profil - KerjaSetara</title>
-  <link rel="stylesheet" href="{{ asset('css/lengkapi.css') }}">
+  <link rel="stylesheet" href="{{ secure_asset('css/lengkapi.css') }}">
 </head>
 <body>
   <div class="container">
