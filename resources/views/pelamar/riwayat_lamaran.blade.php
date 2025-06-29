@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riwayat Lamaran Saya - KerjaSetara</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/kerjasetara.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('css/kerjasetara.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Anda bisa memindahkan style ini ke file CSS utama jika diperlukan */
